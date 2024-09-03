@@ -11,13 +11,92 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#43AF2A">
+        android:background="#43AF2A"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+            android:layout_width="448dp"
+            android:layout_height="717dp"
+            android:layout_marginTop="8dp"
+            android:background="#F1F1F1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F1F1F1"
+                android:orientation="vertical">
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#FF00DD">
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="200dp"
+                        android:orientation="horizontal"
+                        android:background="#FF5100">
+
+
+
+                        <FrameLayout
+                            android:layout_width="100dp"
+                            android:layout_height="200dp"
+                            android:layout_marginLeft="8dp"
+                            android:background="#FFDD00">
+
+
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="110dp"
+                                app:srcCompat="@drawable/empty_300x240"
+                                android:layout_margin="5dp"
+                                android:background="#C8C8C8"/>
+
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:text="Name tovar"
+                                android:layout_marginTop="120dp"
+                                android:background="#A1FF0000"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:text="Price"
+                                android:layout_marginTop="175dp"
+                                android:background="#A1FF0000"
+                                android:textAlignment="center" />
+
+
+
+
+                        </FrameLayout>
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+        </ScrollView>
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="220dp"
             android:layout_height="50dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/bg"
             android:backgroundTint="#FEFEFE"
             android:text="@string/app_name"
@@ -38,7 +117,10 @@
             android:backgroundTint="#F3F3F3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+
+        </SearchView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
