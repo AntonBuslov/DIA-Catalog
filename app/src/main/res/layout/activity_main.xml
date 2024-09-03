@@ -31,18 +31,18 @@
                 android:background="#F1F1F1"
                 android:orientation="vertical">
 
+
                 <HorizontalScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="16dp"
                     android:background="#FF00DD">
 
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="200dp"
-                        android:orientation="horizontal"
-                        android:background="#FF5100">
-
+                        android:background="#FF5100"
+                        android:orientation="horizontal">
 
 
                         <FrameLayout
@@ -56,9 +56,9 @@
                                 android:id="@+id/imageView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="110dp"
-                                app:srcCompat="@drawable/empty_300x240"
                                 android:layout_margin="5dp"
-                                android:background="#C8C8C8"/>
+                                android:background="#C8C8C8"
+                                app:srcCompat="@drawable/empty_300x240" />
 
 
                             <TextView
@@ -66,10 +66,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginLeft="5dp"
-                                android:layout_marginRight="5dp"
-                                android:text="Name tovar"
                                 android:layout_marginTop="120dp"
+                                android:layout_marginRight="5dp"
                                 android:background="#A1FF0000"
+                                android:text="Name tovar"
                                 android:textAlignment="center" />
 
                             <TextView
@@ -77,18 +77,181 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="20dp"
                                 android:layout_marginLeft="5dp"
-                                android:layout_marginRight="5dp"
-                                android:text="Price"
                                 android:layout_marginTop="175dp"
+                                android:layout_marginRight="5dp"
                                 android:background="#A1FF0000"
+                                android:text="Price"
                                 android:textAlignment="center" />
 
 
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="100dp"
+                            android:layout_height="200dp"
+                            android:layout_marginLeft="8dp"
+                            android:background="#FFDD00">
+
+
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="110dp"
+                                android:layout_margin="5dp"
+                                android:background="#C8C8C8"
+                                app:srcCompat="@drawable/empty_300x240" />
+
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="120dp"
+                                android:layout_marginRight="5dp"
+                                android:background="#A1FF0000"
+                                android:text="Name tovar"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="175dp"
+                                android:layout_marginRight="5dp"
+                                android:background="#A1FF0000"
+                                android:text="Price"
+                                android:textAlignment="center" />
+
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="100dp"
+                            android:layout_height="200dp"
+                            android:layout_marginLeft="8dp"
+                            android:background="#FFDD00">
+
+
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="110dp"
+                                android:layout_margin="5dp"
+                                android:background="#C8C8C8"
+                                app:srcCompat="@drawable/empty_300x240" />
+
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="120dp"
+                                android:layout_marginRight="5dp"
+                                android:background="#A1FF0000"
+                                android:text="Name tovar"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="175dp"
+                                android:layout_marginRight="5dp"
+                                android:background="#A1FF0000"
+                                android:text="Price"
+                                android:textAlignment="center" />
+
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="100dp"
+                            android:layout_height="200dp"
+                            android:layout_marginLeft="8dp"
+                            android:background="#FFDD00">
+
+
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="110dp"
+                                android:layout_margin="5dp"
+                                android:background="#C8C8C8"
+                                app:srcCompat="@drawable/empty_300x240" />
+
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="120dp"
+                                android:layout_marginRight="5dp"
+                                android:background="#A1FF0000"
+                                android:text="Name tovar"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="175dp"
+                                android:layout_marginRight="5dp"
+                                android:background="#A1FF0000"
+                                android:text="Price"
+                                android:textAlignment="center" />
+
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="100dp"
+                            android:layout_height="200dp"
+                            android:layout_marginLeft="8dp"
+                            android:background="#FFDD00">
+
+
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="110dp"
+                                android:layout_margin="5dp"
+                                android:background="#C8C8C8"
+                                app:srcCompat="@drawable/empty_300x240" />
+
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="120dp"
+                                android:layout_marginRight="5dp"
+                                android:background="#A1FF0000"
+                                android:text="Name tovar"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="175dp"
+                                android:layout_marginRight="5dp"
+                                android:background="#A1FF0000"
+                                android:text="Price"
+                                android:textAlignment="center" />
 
 
                         </FrameLayout>
                     </LinearLayout>
                 </HorizontalScrollView>
+
             </LinearLayout>
         </ScrollView>
 
