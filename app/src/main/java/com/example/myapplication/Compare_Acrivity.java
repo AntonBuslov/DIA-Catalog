@@ -13,37 +13,43 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class Account_Activity extends AppCompatActivity {
-
+public class Compare_Acrivity extends AppCompatActivity {
     BottomNavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_account);
+        setContentView(R.layout.activity_compare_acrivity);
         navigationView = findViewById(R.id.navigationBar);
-        navigationView.setSelectedItemId(R.id.profile);
+        navigationView.setSelectedItemId(R.id.compare);
 
         navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId() == R.id.home){
-                    startActivity( new Intent( Account_Activity.this, MainActivity.class));
+                    startActivity( new Intent( Compare_Acrivity.this, MainActivity.class));
                     overridePendingTransition(0,0);
                     return true;
                 }
                 if(item.getItemId() == R.id.compare){
-                    startActivity( new Intent( Account_Activity.this, Compare_Acrivity.class));
-                    overridePendingTransition(0,0);
                     return true;
                 }
                 if(item.getItemId() == R.id.favorits){
-                    startActivity( new Intent( Account_Activity.this, Favorities_Activity.class));
+                    startActivity( new Intent( Compare_Acrivity.this, Favorities_Activity.class));
                     overridePendingTransition(0,0);
                     return true;
                 }
                 if(item.getItemId() == R.id.profile){
+                    if(FirebaseAuth.getInstance().getCurrentUser() == null){
+                        startActivity( new Intent( Compare_Acrivity.this, Login_Activity.class));
+                        overridePendingTransition(0,0);
+                    }else{
+                        startActivity( new Intent( Compare_Acrivity.this, Account_Activity.class));
+                        overridePendingTransition(0,0);
+                    }
 
                     return true;
                 }
