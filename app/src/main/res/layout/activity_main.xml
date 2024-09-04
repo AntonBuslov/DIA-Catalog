@@ -13,8 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        app:menu="@menu/bottom_nav_menu"
-        tools:layout_editor_absoluteY="917dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -24,6 +24,7 @@
         tools:layout_editor_absoluteX="97dp">
 
         <ScrollView
+            android:id="@+id/scrollView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -41,6 +42,28 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#26ABC3"
+                    android:text="Catalog of products"
+                    android:textSize="24sp"
+                    android:layout_margin="10dp" />
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Recommendations"
+                    android:textAlignment="center"
+                    android:textSize="48sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
             </LinearLayout>
         </ScrollView>
 
