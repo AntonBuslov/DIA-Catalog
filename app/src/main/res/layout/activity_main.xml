@@ -47,10 +47,10 @@
                     android:id="@+id/button3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:backgroundTint="#26ABC3"
                     android:text="Catalog of products"
-                    android:textSize="24sp"
-                    android:layout_margin="10dp" />
+                    android:textSize="24sp" />
 
                 <TextView
                     android:id="@+id/textView12"

@@ -13,7 +13,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="82dp"
-        android:background="#26ABC3">
+        android:background="#26ABC3"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/textView"
@@ -43,6 +45,18 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="200dp"/>
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:ems="10"
+        android:hint="Enter name"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:textColor="#000000" />
 
     <EditText
         android:id="@+id/emailText"
