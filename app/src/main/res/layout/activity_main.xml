@@ -22,7 +22,6 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/bg"
             android:backgroundTint="#FEFEFE"
-            android:onClick="AccounButtClick"
             android:text="@string/app_name"
             android:textAlignment="center"
             android:textColor="#43AE2A"
