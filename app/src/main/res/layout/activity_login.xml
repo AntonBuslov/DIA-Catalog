@@ -5,12 +5,34 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     android:gravity="center_horizontal|top"
     android:orientation="vertical"
     tools:context=".Login_Activity">
 
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:background="#26ACC4">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg"
+            android:backgroundTint="#FEFEFE"
+            android:text="@string/app_name"
+            android:textAlignment="center"
+            android:textColor="#26ACC4"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView2"
@@ -51,6 +73,7 @@
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:backgroundTint="#26ABC3"
         android:onClick="Login"
         android:text="Login" />
 
@@ -75,7 +98,7 @@
             android:layout_weight="1"
             android:onClick="registerClic"
             android:text=" Register!"
-            android:textColor="#1651E2"
+            android:textColor="#3755EA"
             android:textSize="20sp" />
     </LinearLayout>
 
