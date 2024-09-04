@@ -11,9 +11,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#43AF2A"
+        android:background="#26ACC4"
         tools:layout_editor_absoluteX="97dp"
         tools:layout_editor_absoluteY="16dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="780dp"
+            android:layout_marginTop="8dp"
+            android:background="#F1F1F1"
+            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            tools:layout_editor_absoluteX="-1dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical" />
+        </ScrollView>
 
         <TextView
             android:id="@+id/textView"
@@ -24,7 +40,7 @@
             android:backgroundTint="#FEFEFE"
             android:text="@string/app_name"
             android:textAlignment="center"
-            android:textColor="#43AE2A"
+            android:textColor="#26ACC4"
             android:textSize="36sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
