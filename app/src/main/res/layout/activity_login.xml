@@ -98,7 +98,7 @@
             android:layout_weight="1"
             android:onClick="registerClic"
             android:text=" Register!"
-            android:textColor="#3755EA"
+            android:textColor="#1651E2"
             android:textSize="20sp" />
     </LinearLayout>
 
