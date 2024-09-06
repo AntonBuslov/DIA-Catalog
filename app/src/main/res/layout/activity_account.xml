@@ -107,7 +107,7 @@
             app:srcCompat="@drawable/baseline_account_circle_24" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/usernameText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Username"
@@ -119,14 +119,14 @@
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/emailText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Email"
             android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintTop_toBottomOf="@+id/usernameText" />
 
         <Button
             android:id="@+id/button"
@@ -134,10 +134,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:backgroundTint="#26ABC3"
+            android:onClick="LogOut"
             android:text="Edit profile"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+            app:layout_constraintTop_toBottomOf="@+id/emailText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
