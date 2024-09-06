@@ -1,61 +1,68 @@
-package com.example.myapplication;
+package com.example.myapplication
 
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
+import com.google.firebase.auth.FirebaseAuth
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.auth.FirebaseAuth;
+class MainActivity : AppCompatActivity() {
+    private  lateinit var binding: ActivityMainBinding
+    private val viewModel = MainViewMod()
+    var navigationView: BottomNavigationView? = null
 
-public class MainActivity extends AppCompatActivity {
-    BottomNavigationView navigationView;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        navigationView = findViewById(R.id.navigationBar);
-        navigationView.setSelectedItemId(R.id.home);
+        navigationView = binding.navigationBar
+        navigationView?.setSelectedItemId(R.id.home)
 
-        navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId() == R.id.home){
-                    return true;
-                }
-                if(item.getItemId() == R.id.compare){
-                    startActivity( new Intent( MainActivity.this, Compare_Acrivity.class));
-                    overridePendingTransition(0,0);
-                    return true;
-                }
-                if(item.getItemId() == R.id.favorits){
-                    startActivity( new Intent( MainActivity.this, Favorities_Activity.class));
-                    overridePendingTransition(0,0);
-                    return true;
-                }
-                if(item.getItemId() == R.id.profile){
-                    if(FirebaseAuth.getInstance().getCurrentUser() == null){
-                        startActivity( new Intent( MainActivity.this, Login_Activity.class));
-                        overridePendingTransition(0,0);
-                    }else{
-                        startActivity( new Intent( MainActivity.this, Account_Activity.class));
-                        overridePendingTransition(0,0);
-                    }
-
-                    return true;
-                }
-                return false;
+        navigationView?.setOnItemSelectedListener(NavigationBarView.OnItemSelectedListener { item ->
+            if (item.itemId == R.id.home) {
+                return@OnItemSelectedListener true
             }
-        });
+            if (item.itemId == R.id.compare) {
+                startActivity(Intent(this@MainActivity, Compare_Acrivity::class.java))
+                overridePendingTransition(0, 0)
+                return@OnItemSelectedListener true
+            }
+            if (item.itemId == R.id.favorits) {
+                startActivity(Intent(this@MainActivity, Favorities_Activity::class.java))
+                overridePendingTransition(0, 0)
+                return@OnItemSelectedListener true
+            }
+            if (item.itemId == R.id.profile) {
+                if (FirebaseAuth.getInstance().currentUser == null) {
+                    startActivity(Intent(this@MainActivity, Login_Activity::class.java))
+                    overridePendingTransition(0, 0)
+                } else {
+                    startActivity(Intent(this@MainActivity, Account_Activity::class.java))
+                    overridePendingTransition(0, 0)
+                }
+
+                return@OnItemSelectedListener true
+            }
+            false
+        })
+        initCategory()
     }
 
-
-
+    private fun initCategory() {
+        binding.progressBarCategory.visibility=View.VISIBLE
+        viewModel.category.observe(this,Observer{
+            binding.recyclerViewCategory.layoutManager=LinearLayoutManager(this@MainActivity,LinearLayoutManager.HORIZONTAL,false)
+            binding.recyclerViewCategory.adapter=AdaptCategory(it)
+            binding.progressBarCategory.visibility=View.GONE
+        })
+        viewModel.loadCategory()
+    }
 }
