@@ -3,35 +3,49 @@ package com.example.myapplication
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.ktx.toObject
 
-class MainViewMod():ViewModel(){
-    private val firebaseDatabase=FirebaseDatabase.getInstance()
-    private  val _category=MutableLiveData<MutableList<Category>>()
+class MainViewMod : ViewModel() {
+    private val firestoreDatabase = FirebaseFirestore.getInstance()
 
-    val category:LiveData<MutableList<Category>> = _category
+    private val _category = MutableLiveData<MutableList<Category>>()
+    private val _recommended = MutableLiveData<MutableList<ItemsModel>>()
 
-    fun loadCategory(){
-        val Ref = firebaseDatabase.getReference("Category")
-        Ref.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val lists = mutableListOf<Category>()
-                for (childSnapshot in snapshot.children){
-                    val list = childSnapshot.getValue(Category::class.java)
-                    if (list != null) {
-                        lists.add(list)
-                    }
+    val category: LiveData<MutableList<Category>> = _category
+    val recommended: LiveData<MutableList<ItemsModel>> = _recommended
+
+    fun loadRecommended() {
+        val ref = firestoreDatabase.collection("Items")
+        ref.whereEqualTo("showRecommended", true)
+            .get()
+            .addOnSuccessListener { documents ->
+                val lists = mutableListOf<ItemsModel>()
+                for (document in documents) {
+                    val item = document.toObject(ItemsModel::class.java)
+                    lists.add(item)
                 }
-                _category.value=lists
+                _recommended.value = lists
             }
-
-            override fun onCancelled(error: DatabaseError) {
+            .addOnFailureListener {
 
             }
-        })
     }
 
+    fun loadCategory() {
+        val ref = firestoreDatabase.collection("Category")
+        ref.get()
+            .addOnSuccessListener { documents: QuerySnapshot ->
+                val lists = mutableListOf<Category>()
+                for (document in documents) {
+                    val category = document.toObject(Category::class.java)
+                    lists.add(category)
+                }
+                _category.value = lists
+            }
+            .addOnFailureListener {
+
+            }
+    }
 }

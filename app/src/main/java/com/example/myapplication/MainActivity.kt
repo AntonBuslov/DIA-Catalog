@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -54,6 +55,17 @@ class MainActivity : AppCompatActivity() {
             false
         })
         initCategory()
+        initRecommeded()
+    }
+
+    private fun initRecommeded() {
+        binding.progressBarCategory.visibility=View.VISIBLE
+        viewModel.recommended.observe(this,Observer{
+            binding.viewRecommendation.layoutManager=GridLayoutManager(this@MainActivity,2)
+            binding.viewRecommendation.adapter=RecommendedAdapt(it)
+            binding.progressBarRecommend.visibility=View.GONE
+        })
+        viewModel.loadRecommended()
     }
 
     private fun initCategory() {
