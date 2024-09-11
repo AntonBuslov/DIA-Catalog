@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -31,6 +33,8 @@ public class Account_Activity extends AppCompatActivity {
 
     TextView emailText, usernameText;
 
+    Button editProfileButton;
+    ProgressBar progresBarForName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,12 @@ public class Account_Activity extends AppCompatActivity {
         emailText = findViewById(R.id.emailText);
         usernameText = findViewById(R.id.usernameText);
 
+        progresBarForName = findViewById(R.id.progressBar);
+        editProfileButton = findViewById(R.id.button);
+
+        editProfileButton.setVisibility(View.INVISIBLE);
+        emailText.setVisibility(View.INVISIBLE);
+        usernameText.setVisibility(View.INVISIBLE);
 
         navigationView.setSelectedItemId(R.id.profile);
 
@@ -69,6 +79,7 @@ public class Account_Activity extends AppCompatActivity {
                 return false;
             }
         });
+
         DocumentReference docRef = firebaseFirestore.collection("users").document(firebaseAuth.getCurrentUser().getUid());
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -79,6 +90,10 @@ public class Account_Activity extends AppCompatActivity {
                     if(doc.exists()){
                         emailText.setText(doc.get("Email").toString());
                         usernameText.setText(doc.get("Name").toString());
+                        editProfileButton.setVisibility(View.VISIBLE);
+                        emailText.setVisibility(View.VISIBLE);
+                        usernameText.setVisibility(View.VISIBLE);
+                        progresBarForName.setVisibility(View.INVISIBLE);
                     }
                 }
             }
