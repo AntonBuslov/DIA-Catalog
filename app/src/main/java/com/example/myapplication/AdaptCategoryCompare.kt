@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
+
 import com.bumptech.glide.Glide
 import com.example.myapplication.databinding.CategoryCardBinding
 
 
 
-class AdaptCategory (val items:MutableList<Category>):
-    RecyclerView.Adapter<AdaptCategory.Viewholder>() {
+class AdaptCategoryCompare (val items:MutableList<Category>):
+    RecyclerView.Adapter<AdaptCategoryCompare.Viewholder>() {
     private var  selectedPosition= -1
     private var lastSelectedPosition=-1
     inner class Viewholder(val binding: CategoryCardBinding):RecyclerView.ViewHolder(binding.root)
@@ -82,14 +83,14 @@ class AdaptCategory (val items:MutableList<Category>):
                 notifyItemChanged(selectedPosition)
             }
 
-                Handler(Looper.getMainLooper()).postDelayed({
-
-                    val intent = Intent(holder.itemView.context, ActivityListItems::class.java).apply {
-                        putExtra("id", item.id.toString())
-                        putExtra("title", item.title)
-                    }
-                    ContextCompat.startActivity(holder.itemView.context,intent,null)
-                }, 1000)
+//                Handler(Looper.getMainLooper()).postDelayed({
+//
+//                    val intent = Intent(holder.itemView.context, ActivityListItems::class.java).apply {
+//                        putExtra("id", item.id.toString())
+//                        putExtra("title", item.title)
+//                    }
+//                    ContextCompat.startActivity(holder.itemView.context,intent,null)
+//                }, 1000)
             }
         }
 

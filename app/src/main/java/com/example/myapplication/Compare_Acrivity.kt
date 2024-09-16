@@ -1,60 +1,70 @@
-package com.example.myapplication;
+package com.example.myapplication
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
+import android.content.Intent
+import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.databinding.ActivityCompareAcrivityBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
+import com.google.firebase.auth.FirebaseAuth
 
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+class Compare_Acrivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCompareAcrivityBinding
+    private val viewModel = MainViewMod()
+    private var navigationView: BottomNavigationView? = null
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.auth.FirebaseAuth;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityCompareAcrivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-public class Compare_Acrivity extends AppCompatActivity {
-    BottomNavigationView navigationView;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_compare_acrivity);
-        navigationView = findViewById(R.id.navigationBar);
-        navigationView.setSelectedItemId(R.id.compare);
+        navigationView = binding.navigationBar
+        navigationView?.setSelectedItemId(R.id.home)
 
-        navigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId() == R.id.home){
-                    startActivity( new Intent( Compare_Acrivity.this, MainActivity.class));
-                    overridePendingTransition(0,0);
-                    return true;
+        navigationView?.setOnItemSelectedListener(NavigationBarView.OnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.home -> {
+                    startActivity(Intent(this@Compare_Acrivity, MainActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
                 }
-                if(item.getItemId() == R.id.compare){
-                    return true;
+                R.id.compare -> true
+                R.id.favorits -> {
+                    startActivity(Intent(this@Compare_Acrivity, Favorities_Activity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
                 }
-                if(item.getItemId() == R.id.favorits){
-                    startActivity( new Intent( Compare_Acrivity.this, Favorities_Activity.class));
-                    overridePendingTransition(0,0);
-                    return true;
-                }
-                if(item.getItemId() == R.id.profile){
-                    if(FirebaseAuth.getInstance().getCurrentUser() == null){
-                        startActivity( new Intent( Compare_Acrivity.this, Login_Activity.class));
-                        overridePendingTransition(0,0);
-                    }else{
-                        startActivity( new Intent( Compare_Acrivity.this, Account_Activity.class));
-                        overridePendingTransition(0,0);
+                R.id.profile -> {
+                    val intent = if (FirebaseAuth.getInstance().currentUser == null) {
+                        Intent(this@Compare_Acrivity, Login_Activity::class.java)
+                    } else {
+                        Intent(this@Compare_Acrivity, Account_Activity::class.java)
                     }
-
-                    return true;
+                    startActivity(intent)
+                    overridePendingTransition(0, 0)
+                    true
                 }
-                return false;
+                else -> false
             }
-        });
+        })
+
+        initCategoryCompare()
+    }
+
+    private fun initCategoryCompare() {
+        binding.progressBarCompareCategory.visibility = View.VISIBLE
+        viewModel.category.observe(this, Observer { categories ->
+            binding.recyyclerViewCompareCategory.layoutManager = LinearLayoutManager(
+                this@Compare_Acrivity,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            binding.recyyclerViewCompareCategory.adapter = AdaptCategoryCompare(categories.toMutableList())
+            binding.progressBarCompareCategory.visibility = View.GONE
+        })
+        viewModel.loadCategory()
     }
 }
