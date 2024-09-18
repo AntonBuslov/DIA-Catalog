@@ -13,7 +13,8 @@ data class ItemsModel  (
     var rating:Double=0.0,
     var numberInCart:Int=0,
     var showRecommended:Boolean=false,
-    var categoryId:String=""
+    var categoryId:String="",
+    var siteUrl:ArrayList<String> =ArrayList()
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
@@ -24,7 +25,8 @@ data class ItemsModel  (
         parcel.readDouble(),
         parcel.readInt(),
         parcel.readByte() != 0.toByte(),
-        parcel.readString().toString()
+        parcel.readString().toString(),
+        parcel.createStringArrayList() as ArrayList<String>
     ) {
     }
 
@@ -38,6 +40,7 @@ data class ItemsModel  (
         parcel.writeInt(numberInCart)
         parcel.writeByte(if (showRecommended) 1 else 0)
         parcel.writeString(categoryId)
+        parcel.writeStringList(siteUrl)
     }
 
     override fun describeContents(): Int {

@@ -23,8 +23,17 @@ class DetailAktivity : BaseActivity() {
 
         getBundle()
         initList()
+        initSiteList()
 
+    }
 
+    private fun initSiteList() {
+        val siteList = ArrayList<String>()
+        for (siteUrl in item.siteUrl) {
+            siteList.add(siteUrl)
+        }
+        binding.saitList.adapter = SiteAdapter(siteList)
+        binding.saitList.layoutManager = LinearLayoutManager(this)
     }
 
     private fun initList() {

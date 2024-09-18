@@ -61,8 +61,6 @@
                 android:layout_marginTop="16dp"
                 android:clipToPadding="false"
                 android:paddingStart="8dp"
-
-
                 android:paddingEnd="8dp" />
 
             <LinearLayout
@@ -130,7 +128,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/model_list"
-                android:layout_width="81dp"
+                android:layout_width="match_parent"
                 android:layout_height="123dp"
                 android:layout_marginTop="16dp"
                 android:clipToPadding="false"
@@ -146,6 +144,15 @@
                 android:layout_margin="16dp"
                 android:text="description"
                 android:textColor="@color/darkGrey" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/saitList"
+                android:layout_width="315dp"
+                android:layout_height="123dp"
+                android:layout_marginTop="16dp"
+                android:clipToPadding="false"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp" />
 
         </LinearLayout>
     </ScrollView>
