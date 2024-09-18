@@ -5,16 +5,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,7 +44,6 @@ public class Account_Activity extends AppCompatActivity {
         progresBarForName = findViewById(R.id.progressBar);
         editProfileButton = findViewById(R.id.button);
 
-        editProfileButton.setVisibility(View.INVISIBLE);
         emailText.setVisibility(View.INVISIBLE);
         usernameText.setVisibility(View.INVISIBLE);
 
@@ -80,6 +75,10 @@ public class Account_Activity extends AppCompatActivity {
             }
         });
 
+        refreshName();
+
+    }
+    private void refreshName(){
         DocumentReference docRef = firebaseFirestore.collection("users").document(firebaseAuth.getCurrentUser().getUid());
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -90,7 +89,6 @@ public class Account_Activity extends AppCompatActivity {
                     if(doc.exists()){
                         emailText.setText(doc.get("Email").toString());
                         usernameText.setText(doc.get("Name").toString());
-                        editProfileButton.setVisibility(View.VISIBLE);
                         emailText.setVisibility(View.VISIBLE);
                         usernameText.setVisibility(View.VISIBLE);
                         progresBarForName.setVisibility(View.INVISIBLE);
@@ -98,12 +96,28 @@ public class Account_Activity extends AppCompatActivity {
                 }
             }
         });
-
     }
-
     public void LogOut(View view){
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(Account_Activity.this, MainActivity.class));
         finish();
+    }
+
+    public void ChangeName(View view){
+        startActivity(new Intent(Account_Activity.this, ChangeName.class));
+    }
+
+    public void ChangeEmail(View view){
+        startActivity(new Intent(Account_Activity.this, ChangeEmail.class));
+    }
+
+    public void ChangePassword(View view){
+        startActivity(new Intent(Account_Activity.this, ChangePassword.class));
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        refreshName();
     }
 }
