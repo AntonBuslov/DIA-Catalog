@@ -13,6 +13,7 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+
             android:name=".ChangePassword"
             android:exported="false" />
         <activity
@@ -20,6 +21,10 @@
             android:exported="false" />
         <activity
             android:name=".ChangeName"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityListItems"
+
             android:exported="false" />
         <activity
             android:name=".Account_Activity"
@@ -32,6 +37,9 @@
             android:exported="false" />
         <activity
             android:name=".Register_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".DetailAktivity"
             android:exported="false" />
         <activity
             android:name=".Login_Activity"
