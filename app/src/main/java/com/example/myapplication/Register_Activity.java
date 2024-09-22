@@ -14,11 +14,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Register_Activity extends AppCompatActivity {
 
-    EditText emailText, passwordText, confirmPasswordText;
+    EditText emailText, passwordText, confirmPasswordText, namwText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,7 @@ public class Register_Activity extends AppCompatActivity {
         emailText = findViewById(R.id.emailText);
         passwordText = findViewById(R.id.passwordText);
         confirmPasswordText = findViewById(R.id.confirmPasswordText);
+        namwText = findViewById(R.id.nameText);
     }
 
     private boolean doesPasswordSame(String password, String password2){
@@ -94,25 +99,42 @@ public class Register_Activity extends AppCompatActivity {
             emailText.setError("email is not correct");
             return;
         }
-
-        CreateFirebaseAccount(emailText.getText().toString(),passwordText.getText().toString());
+        if(namwText.getText().toString().isEmpty()){
+            namwText.setError("Enter your name");
+            return;
+        }
+        CreateFirebaseAccount(emailText.getText().toString(),passwordText.getText().toString(), namwText.getText().toString());
     }
 
-    private void CreateFirebaseAccount(String email, String password){
+    private void CreateFirebaseAccount(String email, String password, String name){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
         Toast.makeText(Register_Activity.this,"Іефке", Toast.LENGTH_SHORT).show();
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(Register_Activity.this,
                 new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(Register_Activity.this,"Registration sucsesfful", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Register_Activity.this,"Registration successful, please check your email inbox", Toast.LENGTH_SHORT).show();
                             firebaseAuth.getCurrentUser().sendEmailVerification();
-                            finish();
+                            Map<String, Object> user = new HashMap<>();
+
+                            user.put("Name", name);
+                            user.put("Email", email);
+
+                            firebaseFirestore.collection("users")
+                                             .document(firebaseAuth.getCurrentUser().getUid().toString())
+                                             .set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        Toast.makeText(Register_Activity.this,"Account created", Toast.LENGTH_SHORT).show();
+                                                    }
+                                            });
+
                         }else{
                             Toast.makeText(Register_Activity.this,task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
     }
