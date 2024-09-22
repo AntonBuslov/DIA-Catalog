@@ -14,7 +14,8 @@ data class ItemsModel  (
     var numberInCart:Int=0,
     var showRecommended:Boolean=false,
     var categoryId:String="",
-    var siteUrl:ArrayList<String> =ArrayList()
+    var siteUrl:ArrayList<String> =ArrayList(),
+    var characteristics: Map<String, String> = emptyMap()
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
@@ -26,7 +27,8 @@ data class ItemsModel  (
         parcel.readInt(),
         parcel.readByte() != 0.toByte(),
         parcel.readString().toString(),
-        parcel.createStringArrayList() as ArrayList<String>
+        parcel.createStringArrayList() as ArrayList<String>,
+        parcel.readHashMap(String::class.java.classLoader) as Map<String, String>
     ) {
     }
 
@@ -41,6 +43,7 @@ data class ItemsModel  (
         parcel.writeByte(if (showRecommended) 1 else 0)
         parcel.writeString(categoryId)
         parcel.writeStringList(siteUrl)
+        parcel.writeMap(characteristics)
     }
 
     override fun describeContents(): Int {

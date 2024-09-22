@@ -24,7 +24,13 @@ class DetailAktivity : BaseActivity() {
         getBundle()
         initList()
         initSiteList()
+        initCharacteristicsList()
+    }
 
+    private fun initCharacteristicsList() {
+            binding.characteristicList.layoutManager = LinearLayoutManager(this)
+            binding.characteristicList.adapter = CharacteristicsAdapter(item.characteristics)
+        
     }
 
     private fun initSiteList() {
