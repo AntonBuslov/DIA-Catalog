@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.ActivityCompareAcrivityBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
@@ -20,6 +21,12 @@ class Compare_Acrivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCompareAcrivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val comparisonList = ComparisonManager.comparisonList
+        val comparisonRecyclerView: RecyclerView = findViewById(R.id.comparisonRecyclerView)
+
+        comparisonRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        comparisonRecyclerView.adapter = ComparisonAdapter(comparisonList)
 
         navigationView = binding.navigationBar
         navigationView?.setSelectedItemId(R.id.home)
@@ -62,9 +69,21 @@ class Compare_Acrivity : AppCompatActivity() {
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
-            binding.recyyclerViewCompareCategory.adapter = AdaptCategoryCompare(categories.toMutableList())
+
+
+            binding.recyyclerViewCompareCategory.adapter = AdaptCategoryCompare(categories.toMutableList()) { selectedCategory ->
+                filterComparisonByCategory(selectedCategory)
+            }
             binding.progressBarCompareCategory.visibility = View.GONE
         })
         viewModel.loadCategory()
+    }
+    private fun filterComparisonByCategory(category: Category) {
+        val filteredComparisonList = ComparisonManager.comparisonList.filter { item ->
+            item.categoryId == category.id.toString()
+        }
+
+        val comparisonRecyclerView: RecyclerView = findViewById(R.id.comparisonRecyclerView)
+        comparisonRecyclerView.adapter = ComparisonAdapter(filteredComparisonList)
     }
 }

@@ -2,6 +2,7 @@ package com.example.myapplication
 
 
 import android.os.Bundle
+import android.widget.Toast
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -11,13 +12,21 @@ import com.example.myapplication.databinding.ActivityDetailBinding
 class DetailAktivity : BaseActivity() {
     private  lateinit var binding: ActivityDetailBinding
     private lateinit var  item:ItemsModel
-
+    private lateinit var compareButtonHandler: CompareButtonHandler
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        compareButtonHandler = CompareButtonHandler(this, binding.compareBtn)
+        getBundle()
+        compareButtonHandler.setInitialState(item)
+
+        binding.compareBtn.setOnClickListener {
+            compareButtonHandler.toggleCompare(item)
+        }
 
 
 
