@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,15 +12,23 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Account_Activity extends AppCompatActivity {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -31,6 +40,8 @@ public class Account_Activity extends AppCompatActivity {
 
     Button editProfileButton;
     ProgressBar progresBarForName;
+
+    RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +57,8 @@ public class Account_Activity extends AppCompatActivity {
 
         emailText.setVisibility(View.INVISIBLE);
         usernameText.setVisibility(View.INVISIBLE);
+
+        recyclerView = findViewById(R.id.rvLastSeen);
 
         navigationView.setSelectedItemId(R.id.profile);
 
@@ -76,8 +89,51 @@ public class Account_Activity extends AppCompatActivity {
         });
 
         refreshName();
+        loadLastSeen();
+    }
+
+
+    private void loadLastSeen(){
+        Log.i("INFO","load");
+        firebaseFirestore.collection("users").document(firebaseAuth.getCurrentUser().getUid().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    Log.i("INFO","userload");
+                    DocumentSnapshot doc = task.getResult();
+                    if(doc.exists()){
+                        List<String> ids = doc.toObject(UserDataClass.class).LastView;
+                        List<ItemsModel> list = new ArrayList<>();
+                        List<Task> tasks = new ArrayList<>();
+                        for(String id : ids){
+                            Log.i("INFO","load item " + id);
+                            tasks.add(firebaseFirestore.collection("Items").document(id).get());
+                        }
+                        Task mergetask = Tasks.whenAllSuccess(tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
+                            @Override
+                            public void onSuccess(List<Object> objects) {
+                                Log.i("INFO","merging");
+                                for(Object ob : objects){
+                                    ItemsModel model = ((DocumentSnapshot) ob).toObject(ItemsModel.class);
+                                    list.add(model);
+                                }
+                                RecommendedAdapt adapt = new RecommendedAdapt(list);
+                                LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(Account_Activity.this, LinearLayoutManager.HORIZONTAL, false);
+                                recyclerView.setLayoutManager(horizontalLayoutManager);
+                                recyclerView.setAdapter(adapt);
+                                Log.i("INFO","loadedall");
+                            }
+                        });
+
+
+                    }
+
+                }
+            }
+        });
 
     }
+
     private void refreshName(){
         DocumentReference docRef = firebaseFirestore.collection("users").document(firebaseAuth.getCurrentUser().getUid());
 
