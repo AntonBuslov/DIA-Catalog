@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Account_Activity extends AppCompatActivity {
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -107,7 +108,10 @@ public class Account_Activity extends AppCompatActivity {
                         List<Task> tasks = new ArrayList<>();
                         for(String id : ids){
                             Log.i("INFO","load item " + id);
-                            tasks.add(firebaseFirestore.collection("Items").document(id).get());
+                            if (!Objects.equals(id, "")) {
+                                tasks.add(firebaseFirestore.collection("Items").document(id).get());
+                            }
+
                         }
                         Task mergetask = Tasks.whenAllSuccess(tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
                             @Override

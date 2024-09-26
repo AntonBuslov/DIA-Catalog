@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onResume() {
         super.onResume()
-        initRecommeded()
+        initRecommended()
         initCategory()
     }
 }
