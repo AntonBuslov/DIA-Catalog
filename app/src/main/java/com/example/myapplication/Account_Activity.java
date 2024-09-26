@@ -28,6 +28,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -122,6 +124,7 @@ public class Account_Activity extends AppCompatActivity {
                                     model.setIditeam(((DocumentSnapshot) ob).getId().toString());
                                     list.add(model);
                                 }
+                                Collections.reverse(list);
                                 RecommendedAdapt adapt = new RecommendedAdapt(list);
                                 LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(Account_Activity.this, LinearLayoutManager.HORIZONTAL, false);
                                 recyclerView.setLayoutManager(horizontalLayoutManager);
