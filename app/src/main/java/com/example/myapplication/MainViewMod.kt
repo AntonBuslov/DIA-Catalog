@@ -24,7 +24,7 @@ class MainViewMod : ViewModel() {
                 val filteredItems = mutableListOf<ItemsModel>()
                 for (document in documents) {
                     val item = document.toObject(ItemsModel::class.java)
-                    if (item.title.toLowerCase().contains(title.toLowerCase())) {
+                    if (item.title.lowercase().contains(title.lowercase())) {
                         filteredItems.add(item)
                     }
 
