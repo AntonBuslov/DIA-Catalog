@@ -133,6 +133,7 @@ public class Register_Activity extends AppCompatActivity {
                                                     @Override
                                                     public void onComplete(@NonNull Task<Void> task) {
                                                         Toast.makeText(Register_Activity.this,"Account created", Toast.LENGTH_SHORT).show();
+                                                        finish();
                                                     }
                                             });
 
