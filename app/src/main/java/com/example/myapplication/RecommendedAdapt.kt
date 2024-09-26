@@ -29,14 +29,20 @@ class RecommendedAdapt(val items:MutableList<ItemsModel>):RecyclerView.Adapter<R
             Glide.with(holder.itemView.context)
                 .load(item.picUrl[0])
                 .into(pic)
+            favBtn.setOnClickListener{
+                TogleFavorites(item.iditeam,favBtn)
+
+            }
+            InFavorities(item.iditeam,favBtn)
 
 
             root.setOnClickListener{
                     val intent= Intent(holder.itemView.context,DetailAktivity::class.java).apply{
                         putExtra("object", item)
+                        putExtra("id",item.iditeam)
                     }
             ContextCompat.startActivity(holder.itemView.context,intent,null)
-                //addtoseen here
+                AddToSeen(item.iditeam)
             }
         }
     }
@@ -46,12 +52,12 @@ class RecommendedAdapt(val items:MutableList<ItemsModel>):RecyclerView.Adapter<R
         val doc = db.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid.toString())
         doc.get().addOnSuccessListener { documentSnapshot ->
             val ids = documentSnapshot.toObject(UserDataClass::class.java)!!.LastView
-            ids.remove(id)
-            ids.add(id)
-            doc.update("LastView", ids)
+            ids?.remove(id)
+            ids?.add(id)
+            doc?.update("LastView", ids)
         }
     }
-    private fun TogleFavorites(id: String) {
+    private fun TogleFavorites(id: String, favBtn:ImageView) {
         val doc = FirebaseFirestore.getInstance().collection("users").document(
             FirebaseAuth.getInstance().currentUser!!.uid.toString()
         )
@@ -59,12 +65,13 @@ class RecommendedAdapt(val items:MutableList<ItemsModel>):RecyclerView.Adapter<R
             val favorites = documentSnapshot.toObject(
                 UserDataClass::class.java
             )!!.Favorites
-            if (favorites.contains(id)) {
-                favorites.remove(id)
+            if (favorites?.contains(id) == true) {
+                favorites?.remove(id)
             } else {
-                favorites.add(id)
+                favorites?.add(id)
             }
-            doc.update("Favorites", favorites)
+            doc?.update("Favorites", favorites)
+            InFavorities(id,favBtn)
         }
     }
 
@@ -77,7 +84,7 @@ class RecommendedAdapt(val items:MutableList<ItemsModel>):RecyclerView.Adapter<R
             val favorities = documentSnapshot.toObject(
                 UserDataClass::class.java
             )!!.Favorites
-            if (favorities.contains(id)) {
+            if (favorities?.contains(id) == true) {
                 imageView.setImageResource(R.drawable.btn_3on)
             } else {
                 imageView.setImageResource(R.drawable.btn_3)
