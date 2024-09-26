@@ -19,13 +19,15 @@ class MainViewMod : ViewModel() {
     fun filterItemsByTitle(title: String) {
         val ref = firestoreDatabase.collection("Items")
         val query = ref.orderBy("title")
-        query.startAt(title).endAt("$title\uF8FF")
-            .get()
+        query.get()
             .addOnSuccessListener { documents: QuerySnapshot ->
                 val filteredItems = mutableListOf<ItemsModel>()
                 for (document in documents) {
                     val item = document.toObject(ItemsModel::class.java)
-                    filteredItems.add(item)
+                    if (item.title.toLowerCase().contains(title.toLowerCase())) {
+                        filteredItems.add(item)
+                    }
+
                 }
                 _allItems.value = filteredItems
             }

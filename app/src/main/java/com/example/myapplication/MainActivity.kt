@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel = MainViewMod()
     private lateinit var navigationView: BottomNavigationView
+    private var isSearching = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                             putExtra("query", it)
                         }
                         startActivity(intent)
+                        isSearching = false
                     }
                 }
                 return false
