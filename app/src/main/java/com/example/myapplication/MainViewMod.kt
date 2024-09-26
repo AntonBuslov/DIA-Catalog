@@ -24,8 +24,10 @@ class MainViewMod : ViewModel() {
                 val filteredItems = mutableListOf<ItemsModel>()
                 for (document in documents) {
                     val item = document.toObject(ItemsModel::class.java)
+                    item.iditeam=document.id
                     if (item.title.lowercase().contains(title.lowercase())) {
                         filteredItems.add(item)
+
                     }
 
                 }
@@ -44,6 +46,7 @@ class MainViewMod : ViewModel() {
                 val lists = mutableListOf<ItemsModel>()
                 for (document in documents) {
                     val item = document.toObject(ItemsModel::class.java)
+                    item.iditeam=document.id
                     lists.add(item)
                 }
                 _recommended.value = lists
@@ -95,6 +98,7 @@ class MainViewMod : ViewModel() {
                 val lists = mutableListOf<ItemsModel>()
                 for (document in documents) {
                     val item = document.toObject(ItemsModel::class.java)
+                    item.iditeam=document.id
                     lists.add(item)
                 }
                 _allItems.value = lists

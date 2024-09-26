@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.databinding.ActivitySearchBinding
 
 class SearchActivity : AppCompatActivity() {
@@ -69,7 +69,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         adapter = ItemAdapter()
-        binding.recyclerViewuItemsearch.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewuItemsearch.layoutManager = GridLayoutManager(this,2)
         binding.recyclerViewuItemsearch.adapter = adapter
     }
 }
