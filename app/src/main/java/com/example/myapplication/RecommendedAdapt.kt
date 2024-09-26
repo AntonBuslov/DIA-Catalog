@@ -58,8 +58,11 @@ class RecommendedAdapt(val items:MutableList<ItemsModel>):RecyclerView.Adapter<R
         }
     }
     private fun TogleFavorites(id: String, favBtn:ImageView) {
+        if(FirebaseAuth.getInstance().currentUser == null){
+            return
+        }
         val doc = FirebaseFirestore.getInstance().collection("users").document(
-            FirebaseAuth.getInstance().currentUser!!.uid.toString()
+            FirebaseAuth.getInstance().currentUser?.uid.toString()
         )
         doc.get().addOnSuccessListener { documentSnapshot ->
             val favorites = documentSnapshot.toObject(
@@ -76,8 +79,11 @@ class RecommendedAdapt(val items:MutableList<ItemsModel>):RecyclerView.Adapter<R
     }
 
     private fun InFavorities(id: String, imageView: ImageView) {
+        if(FirebaseAuth.getInstance().currentUser == null){
+            return
+        }
         val doc = FirebaseFirestore.getInstance().collection("users").document(
-            FirebaseAuth.getInstance().currentUser!!.uid.toString()
+            FirebaseAuth.getInstance().currentUser?.uid.toString()
         )
 
         doc.get().addOnSuccessListener { documentSnapshot ->
