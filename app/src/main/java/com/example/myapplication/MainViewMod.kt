@@ -61,6 +61,7 @@ class MainViewMod : ViewModel() {
                 val lists = mutableListOf<ItemsModel>()
                 for (document in documents) {
                     val item = document.toObject(ItemsModel::class.java)
+                   item.iditeam=document.id
                     lists.add(item)
                 }
                 _recommended.value = lists

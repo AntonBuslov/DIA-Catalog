@@ -104,4 +104,9 @@ class MainActivity : AppCompatActivity() {
         })
         viewModel.loadCategory()
     }
+    override fun onResume() {
+        super.onResume()
+        initRecommeded()
+        initCategory()
+    }
 }
