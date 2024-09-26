@@ -62,6 +62,9 @@ class DetailAktivity : BaseActivity() {
         binding.saitList.layoutManager = LinearLayoutManager(this)
     }
     private fun TogleFavorites(id: String, favBtn:ImageView) {
+        if(FirebaseAuth.getInstance().currentUser == null){
+            return
+        }
         val doc = FirebaseFirestore.getInstance().collection("users").document(
             FirebaseAuth.getInstance().currentUser!!.uid.toString()
         )
@@ -80,6 +83,9 @@ class DetailAktivity : BaseActivity() {
     }
 
     private fun InFavorities(id: String, imageView: ImageView) {
+        if(FirebaseAuth.getInstance().currentUser == null){
+            return
+        }
         val doc = FirebaseFirestore.getInstance().collection("users").document(
             FirebaseAuth.getInstance().currentUser!!.uid.toString()
         )

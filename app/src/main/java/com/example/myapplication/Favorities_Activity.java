@@ -85,6 +85,9 @@ public class Favorities_Activity extends AppCompatActivity {
 
 
     private void loadFavoritre(){
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            return;
+        }
         Log.i("INFO","load");
         firebaseFirestore.collection("users").document(firebaseAuth.getCurrentUser().getUid().toString()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -127,5 +130,9 @@ public class Favorities_Activity extends AppCompatActivity {
             }
         });
 
+    }
+    protected void onResume(){
+        super.onResume();
+        loadFavoritre();
     }
 }
