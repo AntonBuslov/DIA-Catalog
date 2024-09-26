@@ -109,6 +109,7 @@ public class Favorities_Activity extends AppCompatActivity {
                                 Log.i("INFO","merging");
                                 for(Object ob : objects){
                                     ItemsModel model = ((DocumentSnapshot) ob).toObject(ItemsModel.class);
+                                    model.setIditeam(((DocumentSnapshot) ob).getId().toString());
                                     list.add(model);
                                 }
                                 RecommendedAdapt adapt = new RecommendedAdapt(list);
