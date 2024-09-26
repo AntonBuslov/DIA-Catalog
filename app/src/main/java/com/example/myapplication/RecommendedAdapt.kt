@@ -47,6 +47,9 @@ class RecommendedAdapt(val items:MutableList<ItemsModel>):RecyclerView.Adapter<R
         }
     }
     fun AddToSeen(id: String) {
+        if(FirebaseAuth.getInstance().currentUser == null){
+            return
+        }
         val db = FirebaseFirestore.getInstance()
 
         val doc = db.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid.toString())
