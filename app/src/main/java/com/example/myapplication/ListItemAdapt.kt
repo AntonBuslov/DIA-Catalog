@@ -44,36 +44,51 @@ val intent= Intent(holder.itemView.context,DetailAktivity::class.java).apply{
         }
     }
     fun AddToSeen(id: String) {
+        if(FirebaseAuth.getInstance().currentUser == null){
+            return
+        }
         val db = FirebaseFirestore.getInstance()
+
         val doc = db.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid.toString())
         doc.get().addOnSuccessListener { documentSnapshot ->
             val ids = documentSnapshot.toObject(UserDataClass::class.java)!!.LastView
             ids?.remove(id)
             ids?.add(id)
-            doc.update("LastView", ids)
+            doc?.update("LastView", ids)
         }
     }
-    private fun TogleFavorites(id: String, favBtn: ImageView) {
+    private fun TogleFavorites(id: String, favBtn:ImageView) {
+        if(FirebaseAuth.getInstance().currentUser == null){
+            return
+        }
         val doc = FirebaseFirestore.getInstance().collection("users").document(
-            FirebaseAuth.getInstance().currentUser!!.uid.toString()
+            FirebaseAuth.getInstance().currentUser?.uid.toString()
         )
         doc.get().addOnSuccessListener { documentSnapshot ->
-            val favorites = documentSnapshot.toObject(UserDataClass::class.java)!!.Favorites
+            val favorites = documentSnapshot.toObject(
+                UserDataClass::class.java
+            )!!.Favorites
             if (favorites?.contains(id) == true) {
-                favorites.remove(id)
+                favorites?.remove(id)
             } else {
-                favorites.add(id)
+                favorites?.add(id)
             }
-            doc.update("Favorites", favorites)
-            InFavorities(id, favBtn)
+            doc?.update("Favorites", favorites)
+            InFavorities(id,favBtn)
         }
     }
     private fun InFavorities(id: String, imageView: ImageView) {
+        if(FirebaseAuth.getInstance().currentUser == null){
+            return
+        }
         val doc = FirebaseFirestore.getInstance().collection("users").document(
-            FirebaseAuth.getInstance().currentUser!!.uid.toString()
+            FirebaseAuth.getInstance().currentUser?.uid.toString()
         )
+
         doc.get().addOnSuccessListener { documentSnapshot ->
-            val favorities = documentSnapshot.toObject(UserDataClass::class.java)!!.Favorites
+            val favorities = documentSnapshot.toObject(
+                UserDataClass::class.java
+            )!!.Favorites
             if (favorities?.contains(id) == true) {
                 imageView.setImageResource(R.drawable.btn_3on)
             } else {
