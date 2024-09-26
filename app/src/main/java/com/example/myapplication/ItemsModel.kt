@@ -15,7 +15,8 @@ data class ItemsModel  (
     var showRecommended:Boolean=false,
     var categoryId:String="",
     var siteUrl:ArrayList<String> =ArrayList(),
-    var characteristics: Map<String, String> = emptyMap()
+    var characteristics: Map<String, String> = emptyMap(),
+    var iditeam:String=""
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),

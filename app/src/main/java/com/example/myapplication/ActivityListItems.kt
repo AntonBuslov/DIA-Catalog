@@ -2,10 +2,13 @@ package com.example.myapplication
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.databinding.ActivityListItemsBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class ActivityListItems : BaseActivity() {
@@ -22,6 +25,39 @@ class ActivityListItems : BaseActivity() {
 
         getBundle()
         initList()
+    }
+    private fun TogleFavorites(id: String) {
+        val doc = FirebaseFirestore.getInstance().collection("users").document(
+            FirebaseAuth.getInstance().currentUser!!.uid.toString()
+        )
+        doc.get().addOnSuccessListener { documentSnapshot ->
+            val favorites = documentSnapshot.toObject(
+                UserDataClass::class.java
+            )!!.Favorites
+            if (favorites.contains(id)) {
+                favorites.remove(id)
+            } else {
+                favorites.add(id)
+            }
+            doc.update("Favorites", favorites)
+        }
+    }
+
+    private fun InFavorities(id: String, imageView: ImageView) {
+        val doc = FirebaseFirestore.getInstance().collection("users").document(
+            FirebaseAuth.getInstance().currentUser!!.uid.toString()
+        )
+
+        doc.get().addOnSuccessListener { documentSnapshot ->
+            val favorities = documentSnapshot.toObject(
+                UserDataClass::class.java
+            )!!.Favorites
+            if (favorities.contains(id)) {
+                imageView.setImageResource(R.drawable.btn_3on)
+            } else {
+                imageView.setImageResource(R.drawable.btn_3)
+            }
+        }
     }
 
     private fun initList() {
