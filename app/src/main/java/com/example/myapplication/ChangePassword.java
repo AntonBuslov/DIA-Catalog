@@ -79,7 +79,9 @@ public class ChangePassword extends AppCompatActivity {
     private boolean doesPasswordSame(String password, String password2){
         return password.equals(password2);
     }
-
+    public void ForgotPassword(View view){
+        FirebaseAuth.getInstance().sendPasswordResetEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+    }
     private boolean CheckPassword(String password){
         if(password.length() < 8){
             passwordText.setError("Password must be 8 characters or longer");
