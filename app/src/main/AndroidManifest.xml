@@ -33,6 +33,9 @@
             android:name=".Compare_Acrivity"
             android:exported="false" />
         <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
             android:name=".Favorities_Activity"
             android:exported="false" />
         <activity

@@ -43,6 +43,17 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/btn_3" />
+
+                <ImageView
+                    android:id="@+id/compareBtn"
+                    android:layout_width="56dp"
+                    android:layout_height="39dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/pngwing_com__2_"
+                    app:tint="@color/grey" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <ImageView

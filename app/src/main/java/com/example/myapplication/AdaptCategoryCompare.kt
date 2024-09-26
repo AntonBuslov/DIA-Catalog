@@ -1,31 +1,29 @@
 package com.example.myapplication
-import android.os.Handler
-import android.content.Intent
+
 import android.content.res.ColorStateList
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
-
 import com.bumptech.glide.Glide
 import com.example.myapplication.databinding.CategoryCardBinding
 
+class AdaptCategoryCompare(
+    private val items: MutableList<Category>,
+    private val onCategoryClick: (Category) -> Unit
+) : RecyclerView.Adapter<AdaptCategoryCompare.Viewholder>() {
 
+    private var selectedPosition = -1
+    private var lastSelectedPosition = -1
 
-class AdaptCategoryCompare (val items:MutableList<Category>):
-    RecyclerView.Adapter<AdaptCategoryCompare.Viewholder>() {
-    private var  selectedPosition= -1
-    private var lastSelectedPosition=-1
-    inner class Viewholder(val binding: CategoryCardBinding):RecyclerView.ViewHolder(binding.root)
+    inner class Viewholder(val binding: CategoryCardBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Viewholder {
-        val binding=CategoryCardBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        return  Viewholder(binding)
+        val binding = CategoryCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return Viewholder(binding)
     }
-
 
     override fun onBindViewHolder(holder: Viewholder, position: Int) {
         val item = items[position]
@@ -34,6 +32,7 @@ class AdaptCategoryCompare (val items:MutableList<Category>):
         Glide.with(holder.itemView.context)
             .load(item.picUrl)
             .into(holder.binding.pic)
+
         if (selectedPosition == position) {
             holder.binding.pic.setBackgroundResource(0)
             holder.binding.mainLayout.setBackgroundResource(R.drawable.green_button_bg)
@@ -73,33 +72,25 @@ class AdaptCategoryCompare (val items:MutableList<Category>):
                 )
             )
         }
+
+
         holder.binding.root.setOnClickListener {
             val position = position
             if (position != RecyclerView.NO_POSITION) {
-                holder.binding.root.isClickable = false
+
                 lastSelectedPosition = selectedPosition
                 selectedPosition = position
                 notifyItemChanged(lastSelectedPosition)
                 notifyItemChanged(selectedPosition)
-            }
 
-//                Handler(Looper.getMainLooper()).postDelayed({
-//
-//                    val intent = Intent(holder.itemView.context, ActivityListItems::class.java).apply {
-//                        putExtra("id", item.id.toString())
-//                        putExtra("title", item.title)
-//                    }
-//                    ContextCompat.startActivity(holder.itemView.context,intent,null)
-//                }, 1000)
+
+                onCategoryClick(item)
+
+
+                holder.binding.root.isClickable = false
             }
         }
+    }
 
-
-
-    override fun getItemCount(): Int=items.size
-
-
-
-
-
+    override fun getItemCount(): Int = items.size
 }

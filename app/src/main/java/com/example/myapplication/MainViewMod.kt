@@ -6,15 +6,35 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 
-
 class MainViewMod : ViewModel() {
     private val firestoreDatabase = FirebaseFirestore.getInstance()
-
     private val _category = MutableLiveData<MutableList<Category>>()
     private val _recommended = MutableLiveData<MutableList<ItemsModel>>()
-
+    private val _allItems = MutableLiveData<List<ItemsModel>>()
     val category: LiveData<MutableList<Category>> = _category
     val recommended: LiveData<MutableList<ItemsModel>> = _recommended
+    val allItems: LiveData<List<ItemsModel>> get() = _allItems
+
+
+    fun filterItemsByTitle(title: String) {
+        val ref = firestoreDatabase.collection("Items")
+        val query = ref.orderBy("title")
+        query.get()
+            .addOnSuccessListener { documents: QuerySnapshot ->
+                val filteredItems = mutableListOf<ItemsModel>()
+                for (document in documents) {
+                    val item = document.toObject(ItemsModel::class.java)
+                    if (item.title.lowercase().contains(title.lowercase())) {
+                        filteredItems.add(item)
+                    }
+
+                }
+                _allItems.value = filteredItems
+            }
+            .addOnFailureListener {
+
+            }
+    }
 
     fun loadFiltered(id: String) {
         val ref = firestoreDatabase.collection("Items")
@@ -29,6 +49,7 @@ class MainViewMod : ViewModel() {
                 _recommended.value = lists
             }
             .addOnFailureListener {
+
             }
     }
 
@@ -64,5 +85,24 @@ class MainViewMod : ViewModel() {
             .addOnFailureListener {
 
             }
+
     }
+
+    fun loadAllItems() {
+        val ref = firestoreDatabase.collection("Items")
+        ref.get()
+            .addOnSuccessListener { documents: QuerySnapshot ->
+                val lists = mutableListOf<ItemsModel>()
+                for (document in documents) {
+                    val item = document.toObject(ItemsModel::class.java)
+                    lists.add(item)
+                }
+                _allItems.value = lists
+            }
+            .addOnFailureListener {
+            }
+
+    }
+
+
 }
