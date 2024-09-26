@@ -51,6 +51,7 @@ class SearchActivity : AppCompatActivity() {
         adapter.setOnItemClickListener { item ->
             startActivity(Intent(this, DetailAktivity::class.java).apply {
                 putExtra("object", item)
+                putExtra("id",item.iditeam )
             })
         }
 
@@ -60,7 +61,7 @@ class SearchActivity : AppCompatActivity() {
             adapter.setItems(items)
         }
 
-//        viewModel.loadAllItems()
+
     }
 
     private fun setupViewModel() {
