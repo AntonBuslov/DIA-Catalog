@@ -49,6 +49,17 @@ class SiteAdapter(private val sites: List<String>) : RecyclerView.Adapter<SiteAd
                 Glide.with(holder.itemView.context)
                     .load(R.drawable.foxtrot_icon)
                     .into(holder.binding.siteIcon)
+
+            }
+            siteUrl.startsWith("https://allo.ua/") -> {
+                holder.binding.siteUrl.visibility = View.GONE
+                holder.binding.siteIcon.visibility = View.VISIBLE
+                holder.binding.goToSiteBtn.visibility = View.VISIBLE
+
+                Glide.with(holder.itemView.context)
+                    .load(R.drawable.allo_icon)
+                    .into(holder.binding.siteIcon)
+
             }
             siteUrl.startsWith("https://www.ctrs.com.ua/") -> {
                 holder.binding.siteUrl.visibility = View.GONE
