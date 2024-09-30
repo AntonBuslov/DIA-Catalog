@@ -151,7 +151,7 @@ class DetailAktivity : BaseActivity() {
         binding.ratingBar.setOnRatingBarChangeListener{ratingBar, rating, fromUser ->
             if(FirebaseAuth.getInstance().currentUser != null){
                 val doc = FirebaseFirestore.getInstance().collection("Items").document(item.iditeam)
-                item.ratings[FirebaseAuth.getInstance().currentUser?.uid.toString()] = binding.ratingBar.rating
+                item.ratings.put(FirebaseAuth.getInstance().currentUser?.uid.toString(),binding.ratingBar.rating)
                 doc.update("Ratings", item.ratings)
                 updateRating();
             }
