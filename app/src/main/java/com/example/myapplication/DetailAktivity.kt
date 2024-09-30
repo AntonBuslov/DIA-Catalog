@@ -130,10 +130,10 @@ class DetailAktivity : BaseActivity() {
     private fun updateRating(){
         val doc = FirebaseFirestore.getInstance().collection("Items").document(item.iditeam)
         var rating = 0f
-        item.ratings.forEach { entry ->
+        item.Ratings.forEach { entry ->
             rating+=entry.value
         }
-        rating/=item.ratings.size;
+        rating/=item.Ratings.size;
         doc.update("rating", rating)
         binding.ratingTxt.text="${rating}Rating"
     }
@@ -151,8 +151,9 @@ class DetailAktivity : BaseActivity() {
         binding.ratingBar.setOnRatingBarChangeListener{ratingBar, rating, fromUser ->
             if(FirebaseAuth.getInstance().currentUser != null){
                 val doc = FirebaseFirestore.getInstance().collection("Items").document(item.iditeam)
-                item.ratings.put(FirebaseAuth.getInstance().currentUser?.uid.toString(),binding.ratingBar.rating)
-                doc.update("Ratings", item.ratings)
+                var ratingsNew: MutableMap<String,Float> = item.Ratings.toMutableMap()
+                ratingsNew[FirebaseAuth.getInstance().currentUser?.uid.toString()] = binding.ratingBar.rating
+                doc.update("Ratings", ratingsNew)
                 updateRating();
             }
 

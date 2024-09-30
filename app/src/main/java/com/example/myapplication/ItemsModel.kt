@@ -17,25 +17,24 @@ data class ItemsModel  (
     var siteUrl:ArrayList<String> =ArrayList(),
     var characteristics: Map<String, String> = emptyMap(),
     var iditeam:String="",
-    var ratings:MutableMap<String, Float> = mutableMapOf<String, Float>()
+    var Ratings:Map<String, Float> = emptyMap()
 ):Parcelable {
 
     constructor(parcel: Parcel) : this(
-        parcel.readString().toString(),
-        parcel.readString().toString(),
-        parcel.createStringArrayList() as ArrayList<String>,
-        parcel.createStringArrayList() as ArrayList<String>,
+        parcel.readString() ?: "",  // Safely handle potential null
+        parcel.readString() ?: "",  // Safely handle potential null
+        parcel.createStringArrayList() ?: arrayListOf(),  // Handle potential null
+        parcel.createStringArrayList() ?: arrayListOf(),  // Handle potential null
         parcel.readDouble(),
         parcel.readDouble(),
         parcel.readInt(),
-        parcel.readByte() != 0.toByte(),
-        parcel.readString().toString(),
-        parcel.createStringArrayList() as ArrayList<String>,
-        parcel.readHashMap(String::class.java.classLoader) as Map<String, String>,
-        parcel.readString().toString(),
-        parcel.readHashMap(String::class.java.classLoader) as MutableMap<String, Float>
-    ) {
-    }
+        parcel.readByte() != 0.toByte(),  // Convert byte to boolean
+        parcel.readString() ?: "",  // Safely handle potential null
+        parcel.createStringArrayList() ?: arrayListOf(),  // Handle potential null
+        parcel.readHashMap(String::class.java.classLoader) as? Map<String, String> ?: mapOf(),  // Safe casting
+        parcel.readString() ?: "",  // Safely handle potential null
+        parcel.readHashMap(String::class.java.classLoader) as? Map<String, Float> ?: mapOf()  // Corrected to Float
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
@@ -45,13 +44,14 @@ data class ItemsModel  (
         parcel.writeDouble(price)
         parcel.writeDouble(rating)
         parcel.writeInt(numberInCart)
-        parcel.writeByte(if (showRecommended) 1 else 0)
+        parcel.writeByte(if (showRecommended) 1 else 0)  // Convert boolean to byte
         parcel.writeString(categoryId)
         parcel.writeStringList(siteUrl)
-        parcel.writeMap(characteristics)
+        parcel.writeMap(characteristics)  // Write characteristics map
         parcel.writeString(iditeam)
-        parcel.writeMap(ratings)
+        parcel.writeMap(Ratings)  // Write ratings map
     }
+
 
     override fun describeContents(): Int {
         return 0
