@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.RatingBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.myapplication.databinding.ActivityDetailBinding
@@ -19,6 +20,8 @@ class DetailAktivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         compareButtonHandler = CompareButtonHandler(this, binding.compareBtn)
         getBundle()
@@ -124,16 +127,37 @@ class DetailAktivity : BaseActivity() {
     binding.picList.layoutManager=LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
 
     }
-
-        private  fun getBundle(){
-            item = intent.getParcelableExtra("object")!!
-            val id = intent.getStringExtra("id")!!
-            item.iditeam = id
+    private fun updateRating(){
+        val doc = FirebaseFirestore.getInstance().collection("Items").document(item.iditeam)
+        var rating = 0f
+        item.ratings.forEach { entry ->
+            rating+=entry.value
+        }
+        rating/=item.ratings.size;
+        doc.update("rating", rating)
+        binding.ratingTxt.text="${rating}Rating"
+    }
+    private  fun getBundle(){
+        item = intent.getParcelableExtra("object")!!
+        val id = intent.getStringExtra("id")!!
+        item.iditeam = id
         binding.titleTxt.text=item.title
         binding.descriptionTxt.text=item.description
         binding.priceTxt.text="$"+item.price
         binding.ratingTxt.text="${item.rating}Rating"
-    binding.backBtn.setOnClickListener{ finish()}
-     }
+        binding.backBtn.setOnClickListener{ finish()}
+        binding.ratingBar.rating = item.rating.toFloat();
+        binding.ratingBar.stepSize = 0.5f
+        binding.ratingBar.setOnRatingBarChangeListener{ratingBar, rating, fromUser ->
+            if(FirebaseAuth.getInstance().currentUser != null){
+                val doc = FirebaseFirestore.getInstance().collection("Items").document(item.iditeam)
+                item.ratings[FirebaseAuth.getInstance().currentUser?.uid.toString()] = binding.ratingBar.rating
+                doc.update("Ratings", item.ratings)
+                updateRating();
+            }
+
+        }
+
+    }
 
 }

@@ -16,8 +16,10 @@ data class ItemsModel  (
     var categoryId:String="",
     var siteUrl:ArrayList<String> =ArrayList(),
     var characteristics: Map<String, String> = emptyMap(),
-    var iditeam:String=""
+    var iditeam:String="",
+    var ratings:MutableMap<String, Float> = mutableMapOf<String, Float>()
 ):Parcelable {
+
     constructor(parcel: Parcel) : this(
         parcel.readString().toString(),
         parcel.readString().toString(),
@@ -29,7 +31,9 @@ data class ItemsModel  (
         parcel.readByte() != 0.toByte(),
         parcel.readString().toString(),
         parcel.createStringArrayList() as ArrayList<String>,
-        parcel.readHashMap(String::class.java.classLoader) as Map<String, String>
+        parcel.readHashMap(String::class.java.classLoader) as Map<String, String>,
+        parcel.readString().toString(),
+        parcel.readHashMap(String::class.java.classLoader) as MutableMap<String, Float>
     ) {
     }
 
@@ -45,6 +49,8 @@ data class ItemsModel  (
         parcel.writeString(categoryId)
         parcel.writeStringList(siteUrl)
         parcel.writeMap(characteristics)
+        parcel.writeString(iditeam)
+        parcel.writeMap(ratings)
     }
 
     override fun describeContents(): Int {
