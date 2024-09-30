@@ -34,7 +34,10 @@ public class ChangePassword extends AppCompatActivity {
         passwordText = findViewById(R.id.passwordText);
         confirmNewPasswordText = findViewById(R.id.confirmNewPasswordText);
         newPasswordText = findViewById(R.id.newPasswordText);
+
+
     }
+
 
     public void Confirm(View view){
 
