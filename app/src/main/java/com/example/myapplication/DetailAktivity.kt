@@ -127,27 +127,36 @@ class DetailAktivity : BaseActivity() {
     binding.picList.layoutManager=LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
 
     }
-    private fun updateRating(ratingNow: Float){
+    private fun updateRating(){
         val doc = FirebaseFirestore.getInstance().collection("Items").document(item.iditeam)
         var rating = 0f
+
+
         item.Ratings.forEach { entry ->
             rating+=entry.value
         }
-        rating+=ratingNow
-        rating/=item.Ratings.size + 1;
-        doc.update("rating", rating)
+
+
+
+        rating/=item.Ratings.size;
+
+
+        doc.update("rating", rating.toBigDecimal().setScale(2).toFloat())
+
+
         binding.ratingTxt.text="${rating}Rating"
     }
     private  fun getBundle(){
         item = intent.getParcelableExtra("object")!!
         val id = intent.getStringExtra("id")!!
+        var ratingsNew: MutableMap<String,Float> = item.Ratings.toMutableMap()
         item.iditeam = id
         binding.titleTxt.text=item.title
         binding.descriptionTxt.text=item.description
         binding.priceTxt.text="$"+item.price
         binding.ratingTxt.text="${item.rating}Rating"
         binding.backBtn.setOnClickListener{ finish()}
-        binding.ratingBar.rating = item.rating.toFloat();
+        binding.ratingBar.rating = ratingsNew[FirebaseAuth.getInstance().currentUser?.uid.toString()] ?: 0f;
         binding.ratingBar.stepSize = 0.5f
         binding.ratingBar.setOnRatingBarChangeListener{ratingBar, rating, fromUser ->
             if(FirebaseAuth.getInstance().currentUser != null){
@@ -155,7 +164,8 @@ class DetailAktivity : BaseActivity() {
                 var ratingsNew: MutableMap<String,Float> = item.Ratings.toMutableMap()
                 ratingsNew[FirebaseAuth.getInstance().currentUser?.uid.toString()] = binding.ratingBar.rating
                 doc.update("Ratings", ratingsNew)
-                updateRating(binding.ratingBar.rating);
+                item.Ratings = ratingsNew.toMap()
+                updateRating();
             }
 
         }
