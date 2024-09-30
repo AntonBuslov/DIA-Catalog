@@ -127,13 +127,14 @@ class DetailAktivity : BaseActivity() {
     binding.picList.layoutManager=LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false)
 
     }
-    private fun updateRating(){
+    private fun updateRating(ratingNow: Float){
         val doc = FirebaseFirestore.getInstance().collection("Items").document(item.iditeam)
         var rating = 0f
         item.Ratings.forEach { entry ->
             rating+=entry.value
         }
-        rating/=item.Ratings.size;
+        rating+=ratingNow
+        rating/=item.Ratings.size + 1;
         doc.update("rating", rating)
         binding.ratingTxt.text="${rating}Rating"
     }
@@ -154,7 +155,7 @@ class DetailAktivity : BaseActivity() {
                 var ratingsNew: MutableMap<String,Float> = item.Ratings.toMutableMap()
                 ratingsNew[FirebaseAuth.getInstance().currentUser?.uid.toString()] = binding.ratingBar.rating
                 doc.update("Ratings", ratingsNew)
-                updateRating();
+                updateRating(binding.ratingBar.rating);
             }
 
         }
