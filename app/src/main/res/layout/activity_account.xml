@@ -56,6 +56,7 @@
             android:layout_width="220dp"
             android:layout_height="50dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/bg"
             android:backgroundTint="#FEFEFE"
             android:text="@string/app_name"
@@ -63,22 +64,10 @@
             android:textColor="#26ACC4"
             android:textSize="36sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="400dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/bg"
-            android:backgroundTint="#F3F3F3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -169,21 +158,7 @@
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button4"
-            app:layout_constraintTop_toBottomOf="@+id/button2"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="127dp"
-            android:layout_height="38dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="#26ABC3"
-            android:onClick="ChangeEmail"
-            android:text="Change email"
-            android:textSize="10sp"
-            app:layout_constraintEnd_toStartOf="@+id/button"
-            app:layout_constraintTop_toBottomOf="@id/emailText" />
+            app:layout_constraintTop_toBottomOf="@+id/button" />
 
         <ProgressBar
             android:id="@+id/progressBar"

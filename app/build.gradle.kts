@@ -5,15 +5,15 @@ plugins {
 }
 
 android {
-    namespace = "com.example.myapplication"
+    namespace = "com.Practice.DIACataloge"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.myapplication"
-        minSdk = 28
+        applicationId = "com.Practice.DIACataloge"
+        minSdk = 27
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 6
+        versionName = "2.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
