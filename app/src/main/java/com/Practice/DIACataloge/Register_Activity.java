@@ -135,6 +135,7 @@ public class Register_Activity extends AppCompatActivity {
                             user.put("Email", email);
                             user.put("LastView", stringList);
                             user.put("Favorites", stringList);
+                            user.put("Status", "User");
 
                             firebaseFirestore.collection("users")
                                              .document(firebaseAuth.getCurrentUser().getUid().toString())

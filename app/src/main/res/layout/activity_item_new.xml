@@ -31,17 +31,10 @@
             android:hint="Ціна"/>
 
         <EditText
-            android:id="@+id/etRating"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="Рейтинг"/>
-
-        <EditText
             android:id="@+id/etCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="айди категорії"/>
+            android:hint="Id категорії" />
 
         <!-- Checkbox for showing as recommended -->
         <CheckBox
@@ -55,19 +48,20 @@
             android:id="@+id/etCharacteristicKey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="назва характеристики"/>
+            android:hint="Назва характеристики" />
 
         <EditText
             android:id="@+id/etCharacteristicValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="характеристика"/>
+            android:hint="Характеристика" />
 
         <Button
             android:id="@+id/btnAddCharacteristic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Додати характеристику"/>
+            android:backgroundTint="#26ABC3"
+            android:text="Додати характеристику" />
 
         <!-- Fields for adding models -->
         <EditText
@@ -80,7 +74,8 @@
             android:id="@+id/btnAddModel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Додати модель"/>
+            android:backgroundTint="#26ABC3"
+            android:text="Додати модель" />
 
         <EditText
             android:id="@+id/etPicUrl"
@@ -92,7 +87,8 @@
             android:id="@+id/btnAddPicUrl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Додати Image URL"/>
+            android:backgroundTint="#26ABC3"
+            android:text="Додати Image URL" />
 
         <LinearLayout
             android:id="@+id/layoutImages"
@@ -105,19 +101,21 @@
             android:id="@+id/etSiteUrl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="посилання сайт URL"/>
+            android:hint="Посилання сайт URL" />
 
         <Button
             android:id="@+id/btnAddSiteUrl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Додати Site URL"/>
+            android:backgroundTint="#26ABC3"
+            android:text="Додати Site URL" />
 
         <Button
             android:id="@+id/btnSaveItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Зберегти товар"/>
+            android:backgroundTint="#26ABC3"
+            android:text="Зберегти товар" />
 
     </LinearLayout>
 </ScrollView>

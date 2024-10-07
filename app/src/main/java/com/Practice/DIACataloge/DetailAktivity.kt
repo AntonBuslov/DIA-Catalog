@@ -168,9 +168,22 @@ class DetailAktivity : BaseActivity() {
                 val doc = FirebaseFirestore.getInstance().collection("Items").document(item.iditeam)
                 var ratingsNew: MutableMap<String,Float> = item.Ratings.toMutableMap()
                 ratingsNew[FirebaseAuth.getInstance().currentUser?.uid.toString()] = binding.ratingBar.rating
-                doc.update("Ratings", ratingsNew)
+
                 item.Ratings = ratingsNew.toMap()
                 updateRating();
+                doc.get().addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Document found in the offline cache
+                        val document = task.result
+
+                        var ratingsNew: MutableMap<String,Float> = document.toObject(ItemsModel::class.java)?.Ratings!!.toMutableMap()
+                        ratingsNew[FirebaseAuth.getInstance().currentUser?.uid.toString()] = binding.ratingBar.rating
+                        doc.update("ratings", ratingsNew)
+                        item.Ratings = ratingsNew.toMap()
+                        updateRating();
+                    }
+                }
+
             }
             else{
                 Toast.makeText(this, "Увійдіть в акаунт, щоб оцінювати товари", Toast.LENGTH_SHORT).show()

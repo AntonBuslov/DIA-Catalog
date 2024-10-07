@@ -147,6 +147,19 @@
             app:layout_constraintTop_toBottomOf="@id/button" />
 
         <Button
+            android:id="@+id/newIt"
+            android:layout_width="127dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#26ABC3"
+            android:onClick="NewItem"
+            android:text="addItem"
+            android:textSize="10sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/button5"
+            app:layout_constraintEnd_toStartOf="@+id/button" />
+        <Button
             android:id="@+id/button5"
             android:layout_width="127dp"
             android:layout_height="38dp"

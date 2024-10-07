@@ -12,8 +12,8 @@ android {
         applicationId = "com.Practice.DIACataloge"
         minSdk = 27
         targetSdk = 34
-        versionCode = 6
-        versionName = "2.5"
+        versionCode = 8
+        versionName = "2.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

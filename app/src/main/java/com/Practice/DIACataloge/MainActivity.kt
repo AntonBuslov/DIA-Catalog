@@ -30,10 +30,7 @@ class MainActivity : AppCompatActivity() {
         initCategory()
         initRecommended()
         setupSearchView()
-        binding.newIt.setOnClickListener {
-            val intent = Intent(this@MainActivity, ItemNewActivity::class.java)
-            startActivity(intent)
-        }
+
     }
 
     private fun setupSearchView() {

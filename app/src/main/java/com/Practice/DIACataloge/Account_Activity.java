@@ -42,7 +42,7 @@ public class Account_Activity extends BaseActivity {
 
     TextView emailText, usernameText;
 
-    Button editProfileButton;
+    Button editProfileButton, newItem;
     ProgressBar progresBarForName;
 
     RecyclerView recyclerView;
@@ -56,7 +56,7 @@ public class Account_Activity extends BaseActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        newItem = findViewById(R.id.newIt);
         navigationView = findViewById(R.id.navigationBar);
 
         emailText = findViewById(R.id.emailText);
@@ -69,6 +69,7 @@ public class Account_Activity extends BaseActivity {
         usernameText.setVisibility(View.INVISIBLE);
 
         recyclerView = findViewById(R.id.rvLastSeen);
+
 
         navigationView.setSelectedItemId(R.id.profile);
 
@@ -112,6 +113,7 @@ public class Account_Activity extends BaseActivity {
                     Log.i("INFO","userload");
                     DocumentSnapshot doc = task.getResult();
                     if(doc.exists()){
+
                         List<String> ids = doc.toObject(UserDataClass.class).LastView;
                         List<ItemsModel> list = new ArrayList<>();
                         List<Task> tasks = new ArrayList<>();
@@ -150,7 +152,7 @@ public class Account_Activity extends BaseActivity {
     }
 
     private void refreshName(){
-        DocumentReference docRef = firebaseFirestore.collection("users").document(firebaseAuth.getCurrentUser().getUid());
+        DocumentReference docRef = firebaseFirestore.collection("users").document(firebaseAuth.getCurrentUser().getUid().toString());
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -158,11 +160,21 @@ public class Account_Activity extends BaseActivity {
                 if(task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if(doc.exists()){
+                        if(doc.get("Status").equals("Admin")){
+                            newItem.setVisibility(View.VISIBLE);
+                            Log.i("INFO","vas");
+                        }else{
+                            newItem.setVisibility(View.INVISIBLE);
+                            Log.i("INFO","wos");
+                        }
                         emailText.setText(doc.get("Email").toString());
                         usernameText.setText(doc.get("Name").toString());
                         emailText.setVisibility(View.VISIBLE);
                         usernameText.setVisibility(View.VISIBLE);
                         progresBarForName.setVisibility(View.INVISIBLE);
+                        Log.i("INFO","dsf");
+
+
                     }
                 }
             }
@@ -184,6 +196,9 @@ public class Account_Activity extends BaseActivity {
 
     public void ChangePassword(View view){
         startActivity(new Intent(Account_Activity.this, ChangePassword.class));
+    }
+    public void NewItem(View view){
+        startActivity(new Intent(Account_Activity.this, ItemNewActivity.class));
     }
 
     @Override

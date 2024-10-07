@@ -19,9 +19,9 @@ class ItemNewActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
     private val characteristics = mutableMapOf<String, String>()
-    private val picUrls = mutableListOf<String>()
-    private val siteUrls = mutableListOf<String>()
-    private val models = mutableListOf<String>()
+    private val picUrls = ArrayList<String>()
+    private val siteUrls = ArrayList<String>()
+    private val models = ArrayList<String>()
     private lateinit var layoutImages: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +34,6 @@ class ItemNewActivity : AppCompatActivity() {
         val titleEditText = findViewById<EditText>(R.id.etTitle)
         val descriptionEditText = findViewById<EditText>(R.id.etDescription)
         val priceEditText = findViewById<EditText>(R.id.etPrice)
-        val ratingEditText = findViewById<EditText>(R.id.etRating)
         val categoryEditText = findViewById<EditText>(R.id.etCategory)
         val showRecommendedCheckBox = findViewById<CheckBox>(R.id.cbRecommended)
 
@@ -52,7 +51,7 @@ class ItemNewActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.btnSaveItem).setOnClickListener {
-            saveItem(titleEditText, descriptionEditText, priceEditText, ratingEditText, categoryEditText, showRecommendedCheckBox)
+            saveItem(titleEditText, descriptionEditText, priceEditText, categoryEditText, showRecommendedCheckBox)
         }
     }
 
@@ -89,37 +88,24 @@ class ItemNewActivity : AppCompatActivity() {
         titleEditText: EditText,
         descriptionEditText: EditText,
         priceEditText: EditText,
-        ratingEditText: EditText,
         categoryEditText: EditText,
         showRecommendedCheckBox: CheckBox
     ) {
-        val title = titleEditText.text.toString()
-        val description = descriptionEditText.text.toString()
-        val price = priceEditText.text.toString().toDoubleOrNull() ?: run {
+        var item: ItemsModel = ItemsModel();
+        item.title = titleEditText.text.toString()
+        item.description =  descriptionEditText.text.toString()
+        item.price = priceEditText.text.toString().toDoubleOrNull() ?: run {
             showToast("Invalid price")
             return
         }
-        val rating = ratingEditText.text.toString().toDoubleOrNull() ?: run {
-            showToast("Invalid rating")
-            return
-        }
-        val categoryId = categoryEditText.text.toString()
-        val showRecommended = showRecommendedCheckBox.isChecked
+        item.categoryId = categoryEditText.text.toString()
+        item.showRecommended = showRecommendedCheckBox.isChecked
 
-        val newItem = hashMapOf(
-            "title" to title,
-            "description" to description,
-            "price" to price,
-            "rating" to rating,
-            "categoryId" to categoryId,
-            "showRecommended" to showRecommended,
-            "characteristics" to characteristics,
-            "picUrl" to picUrls,
-            "siteUrl" to siteUrls,
-            "models" to models
-        )
-
-        db.collection("Items").add(newItem)
+        item.characteristics =characteristics.toMap()
+        item.model = models
+        item.picUrl = picUrls
+        item.siteUrl = siteUrls
+        db.collection("Items").add(item)
             .addOnSuccessListener {
                 showToast("Item added successfully")
                 finish()
