@@ -24,7 +24,7 @@ return Viewholder(binding)
         with(holder.binding) {
             titleTxt.text = item.title
             priceTxt.text = "$${item.price}"
-            ratingTxt.text = item.rating.toString()
+            ratingTxt.text=(Math.round(item.rating*10f)/10f).toString()
 
             Glide.with(holder.itemView.context)
                 .load(item.picUrl[0])

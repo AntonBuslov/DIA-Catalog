@@ -1,9 +1,11 @@
 package com.Practice.DIACataloge
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 
 class MainViewMod : ViewModel() {
@@ -18,7 +20,7 @@ class MainViewMod : ViewModel() {
 
     fun filterItemsByTitle(title: String) {
         val ref = firestoreDatabase.collection("Items")
-        val query = ref.orderBy("title")
+        val query = ref.orderBy("title").orderBy("rating", Query.Direction.DESCENDING)
         query.get()
             .addOnSuccessListener { documents: QuerySnapshot ->
                 val filteredItems = mutableListOf<ItemsModel>()
@@ -33,14 +35,15 @@ class MainViewMod : ViewModel() {
                 }
                 _allItems.value = filteredItems
             }
-            .addOnFailureListener {
+            .addOnFailureListener {exception ->
+                Log.i("INFO", "fail" + exception.localizedMessage.toString())
 
             }
     }
 
     fun loadFiltered(id: String) {
         val ref = firestoreDatabase.collection("Items")
-        ref.whereEqualTo("categoryId", id)
+        ref.whereEqualTo("categoryId", id).orderBy("rating", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { documents ->
                 val lists = mutableListOf<ItemsModel>()
@@ -51,15 +54,16 @@ class MainViewMod : ViewModel() {
                 }
                 _recommended.value = lists
             }
-            .addOnFailureListener {
+            .addOnFailureListener {exception ->
+                Log.i("INFO", "fail" + exception.localizedMessage.toString())
 
             }
     }
 
     fun loadRecommended() {
-        val ref = firestoreDatabase.collection("Items")
-        ref.whereEqualTo("showRecommended", true)
-            .get()
+        Log.i("INFO", "wos")
+        val ref = firestoreDatabase.collection("Items").whereEqualTo("showRecommended", true).orderBy("rating", Query.Direction.DESCENDING).limit(14)
+        ref.get()
             .addOnSuccessListener { documents ->
                 val lists = mutableListOf<ItemsModel>()
                 for (document in documents) {
@@ -68,9 +72,10 @@ class MainViewMod : ViewModel() {
                     lists.add(item)
                 }
                 _recommended.value = lists
+                Log.i("INFO", "easdad")
             }
-            .addOnFailureListener {
-
+            .addOnFailureListener {exception ->
+                Log.i("INFO", "fail" + exception.localizedMessage.toString())
             }
     }
 
@@ -85,14 +90,15 @@ class MainViewMod : ViewModel() {
                 }
                 _category.value = lists
             }
-            .addOnFailureListener {
+            .addOnFailureListener {exception ->
+                Log.i("INFO", "fail" + exception.localizedMessage.toString())
 
             }
 
     }
 
     fun loadAllItems() {
-        val ref = firestoreDatabase.collection("Items")
+        val ref = firestoreDatabase.collection("Items").orderBy("rating", Query.Direction.DESCENDING)
         ref.get()
             .addOnSuccessListener { documents: QuerySnapshot ->
                 val lists = mutableListOf<ItemsModel>()
@@ -103,7 +109,8 @@ class MainViewMod : ViewModel() {
                 }
                 _allItems.value = lists
             }
-            .addOnFailureListener {
+            .addOnFailureListener {exception ->
+                Log.i("INFO", "fail" + exception.localizedMessage.toString())
             }
 
     }

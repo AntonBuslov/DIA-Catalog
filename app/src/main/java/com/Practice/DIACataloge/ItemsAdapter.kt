@@ -20,7 +20,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
         fun bind(item: ItemsModel) {
             title.text = item.title
             price.text = "$${item.price}"
-            rating.text = item.rating.toString()
+            rating.text=(Math.round(item.rating*10f)/10f).toString()
             Glide.with(itemView.context).load(item.picUrl.firstOrNull()).into(pic)
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(item)
